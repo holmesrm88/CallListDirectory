@@ -10,24 +10,24 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "name")
-@Data
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+//@Entity
+//@Table(name = "name")
+//@Data
+//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Name {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
     private long id;
 
-    @Column(name = "first")
+   // @Column(name = "first")
     private String first;
 
-    @Column(name = "middle")
+   // @Column(name = "middle")
     private String middle;
 
-    @Column(name = "last")
+    //@Column(name = "last")
     private String last;
 
 }

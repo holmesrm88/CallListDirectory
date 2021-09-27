@@ -8,36 +8,21 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "contact")
-@Data
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+//@Entity
+//@Table(name = "contact")
+//@Data
+//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Contact {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     private long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    private Name name;
 
-    @Column(name = "address", nullable = false)
-    private String address;
+    private Address address;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    private Phone phone;
 
-    @Column(name = "email", nullable = false)
     private String email;
 
-    public Contact(long id, String name, String address, String phone, String email) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-    }
-
-    public Contact(){};
 }

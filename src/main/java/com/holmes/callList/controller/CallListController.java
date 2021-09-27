@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @ComponentScan
 @RestController
@@ -32,14 +32,15 @@ public class CallListController {
     }
 
     @PutMapping("/contacts/{id}")
-    public ResponseEntity updateContact(@RequestBody Contact contact) {
-        contactListService.updateContact(contact);
+    public ResponseEntity updateContact(@PathVariable long id, @RequestBody Contact contact) {
+        log.info("contactId in controller " + id);
+        contactListService.updateContact(id,contact);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/contacts/{id}")
-    public Optional<Contact> getContact(@PathVariable long id) {
-        Optional<Contact> con = contactListService.getContact(id);
+    public AtomicReference<Contact> getContact(@PathVariable long id) throws NoSuchFieldException {
+        AtomicReference<Contact> con = contactListService.getContact(id);
         return con;
     }
 
