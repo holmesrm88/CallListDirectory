@@ -1,6 +1,8 @@
 package com.holmes.callList.controller;
 
+import com.holmes.callList.model.CallList;
 import com.holmes.callList.model.Contact;
+import com.holmes.callList.model.Phone;
 import com.holmes.callList.service.ContactListService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,7 @@ public class CallListController {
     }
 
     @GetMapping("/contacts/call-list")
-    public List<Contact> getCallList(){
+    public List<CallList> getCallList(){
         return contactListService.getCallList();
     }
 

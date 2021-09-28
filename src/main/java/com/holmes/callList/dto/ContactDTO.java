@@ -45,7 +45,6 @@ public class ContactDTO {
     private String zip;
 
     @Column(name = "phone", nullable = false)
-    @JsonManagedReference
     @OneToMany(mappedBy = "contact_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PhoneDTO> phone = new ArrayList<>();
 

@@ -26,4 +26,4 @@ INSERT INTO contact (first_name, middle_name, last_name, street, city, state, zi
 
 INSERT INTO phone (phone_type, phone_number, contact_id) VALUES
     ('mobile', '888-555-1212', 1),
-    ('work', '888-111-5555', 1);
+    ('home', '888-111-5555', 1);

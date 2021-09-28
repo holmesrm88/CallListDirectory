@@ -9,6 +9,18 @@ import java.util.List;
 
 public interface PhoneRepository extends JpaRepository<PhoneDTO, Long> {
 
-    @Query(value = "SELECT * FROM PHONE p JOIN CONTACT c on c.contact_id = p.contact_id WHERE p.PHONE_TYPE = 'home' ORDER BY c.LAST_NAME", nativeQuery = true)
-    List<ContactDTO> getCallList();
+    @Query(value = "SELECT\n" +
+            "     p.phone_id,\n" +
+            "     c.contact_id,\n" +
+            "     p.contact_id,\n" +
+            "     c.first_name,\n" +
+            "     c.middle_name,\n" +
+            "     c.last_name,\n" +
+            "     p.phone_type,\n" +
+            "     p.phone_number\n" +
+            "FROM Phone p\n" +
+            "JOIN Contact c on c.contact_id = p.contact_id\n" +
+            "WHERE p.phone_type = 'home'\n" +
+            "ORDER BY c.last_name", nativeQuery = true)
+    List<PhoneDTO> getCallList();
 }

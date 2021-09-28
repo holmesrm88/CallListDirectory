@@ -29,13 +29,10 @@ public class ContactToContactDtoConverter {
             PhoneDTO pdto = new PhoneDTO();
             pdto.setPhoneNumber(p.getNumber() == null ? null : p.getNumber());
             pdto.setPhoneType(p.getType() == null ? null : p.getType());
-//            pdto.setContact_id(dto);
+            //pdto.setContact_id(dto);
             pdtos.add(pdto);
             dto.addToPhoneDto(pdto);
         }
-
-        //dto.setPhone(pdtos);
-
         dto.setEmail(c.getEmail() == null ? null : c.getEmail());
 
         return dto;

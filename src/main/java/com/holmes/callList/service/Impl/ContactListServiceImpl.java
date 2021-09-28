@@ -2,6 +2,7 @@ package com.holmes.callList.service.Impl;
 
 import com.holmes.callList.dto.ContactDTO;
 import com.holmes.callList.dto.PhoneDTO;
+import com.holmes.callList.model.CallList;
 import com.holmes.callList.model.Contact;
 import com.holmes.callList.model.Phone;
 import com.holmes.callList.repository.ContactRepository;
@@ -9,6 +10,7 @@ import com.holmes.callList.repository.PhoneRepository;
 import com.holmes.callList.service.ContactListService;
 import com.holmes.callList.util.converter.ContactDtoToContactConverter;
 import com.holmes.callList.util.converter.ContactToContactDtoConverter;
+import com.holmes.callList.util.converter.PhoneDtoToCallListConverter;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class ContactListServiceImpl implements ContactListService {
     PhoneRepository phoneRepository;
 
     ContactDtoToContactConverter contactDtoToContactConverter;
+    PhoneDtoToCallListConverter phoneDtoToCallListConverter;
 
     @Autowired
     public ContactListServiceImpl(ContactRepository contactRepository, PhoneRepository phoneRepository){
@@ -94,17 +97,18 @@ public class ContactListServiceImpl implements ContactListService {
         contactRepository.deleteById(id);
     }
 
-    public List<Contact> getCallList(){
+    public List<CallList> getCallList(){
         log.info("ContactListServiceImpl | getCallList | START");
-        List<ContactDTO> contactDTOS = phoneRepository.getCallList();
-        List<Contact> contacts = new ArrayList<>();
-        contactDtoToContactConverter = new ContactDtoToContactConverter();
-        for(ContactDTO c : contactDTOS){
-            Contact contact = contactDtoToContactConverter.convertFromContactDtoToContact(c);
-            contacts.add(contact);
+        List<PhoneDTO> phoneDTOS = phoneRepository.getCallList();
+        List<CallList> callLists = new ArrayList<>();
+        phoneDtoToCallListConverter = new PhoneDtoToCallListConverter();
+        for(PhoneDTO dto : phoneDTOS){
+            CallList callList = phoneDtoToCallListConverter.converter(dto);
+            callLists.add(callList);
         }
+        log.info("ContactListServiceImpl | getCallList | returning call list size: " + callLists.size());
         log.info("ContactListServiceImpl | getCallList | END");
-        return contacts;
+        return callLists;
     }
 
     private ContactDTO update(ContactDTO oldCon, Contact newCon) {
