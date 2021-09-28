@@ -19,7 +19,7 @@ public class Name {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "id")
-    private long id;
+    //private long id;
 
    // @Column(name = "first")
     private String first;

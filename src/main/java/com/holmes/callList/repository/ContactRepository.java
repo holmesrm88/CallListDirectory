@@ -9,9 +9,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CallListRepository extends JpaRepository<ContactDTO, Long> {
-
-
-    @Query(value = "SELECT * FROM Contact ORDER BY name", nativeQuery = true)
-    List<ContactDTO> getCallList();
+public interface ContactRepository extends JpaRepository<ContactDTO, Long> {
 }

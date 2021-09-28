@@ -7,21 +7,28 @@ import com.holmes.callList.model.Contact;
 import com.holmes.callList.model.Name;
 import com.holmes.callList.model.Phone;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactDtoToContactConverter {
 
-    // TODO add phone
     public Contact convertFromContactDtoToContact(ContactDTO contactDTO){
         Contact contact = new Contact();
         Name name = new Name();
-        Phone phone = new Phone();
+        List<Phone> phone = new ArrayList<>();
         Address address = new Address();
+        List<PhoneDTO> pdto = contactDTO.getPhone();
 
         name.setFirst(contactDTO.getFirstName() == null ? null : contactDTO.getFirstName());
         name.setMiddle(contactDTO.getMiddleName() == null ? null : contactDTO.getMiddleName());
         name.setLast(contactDTO.getLastName() == null ? null : contactDTO.getLastName());
 
-//        phone.setNumber(phoneDTO.getPhoneNumber() == null ? null : phoneDTO.getPhoneNumber());
-//        phone.setType(phoneDTO.getPhoneType() == null ? null : phoneDTO.getPhoneType());
+        for(PhoneDTO pto : pdto){
+            Phone p1 = new Phone();
+            p1.setNumber(pto.getPhoneNumber() == null ? null : pto.getPhoneNumber());
+            p1.setType(pto.getPhoneType() == null ? null : pto.getPhoneType());
+            phone.add(p1);
+        }
 
         address.setStreet(contactDTO.getStreet() == null ? null : contactDTO.getStreet());
         address.setCity(contactDTO.getCity() == null ? null : contactDTO.getCity());

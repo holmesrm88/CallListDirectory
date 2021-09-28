@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,13 +16,13 @@ import javax.persistence.*;
 public class Contact {
 
 
-    private long id;
+    //private long id;
 
     private Name name;
 
     private Address address;
 
-    private Phone phone;
+    private List<Phone> phone;
 
     private String email;
 

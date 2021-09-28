@@ -1,8 +1,11 @@
 package com.holmes.callList.service.Impl;
 
 import com.holmes.callList.dto.ContactDTO;
+import com.holmes.callList.dto.PhoneDTO;
 import com.holmes.callList.model.Contact;
-import com.holmes.callList.repository.CallListRepository;
+import com.holmes.callList.model.Phone;
+import com.holmes.callList.repository.ContactRepository;
+import com.holmes.callList.repository.PhoneRepository;
 import com.holmes.callList.service.ContactListService;
 import com.holmes.callList.util.converter.ContactDtoToContactConverter;
 import com.holmes.callList.util.converter.ContactToContactDtoConverter;
@@ -18,20 +21,22 @@ import java.util.concurrent.atomic.AtomicReference;
 @Log
 @Service
 public class ContactListServiceImpl implements ContactListService {
-    CallListRepository repository;
+    ContactRepository contactRepository;
+    PhoneRepository phoneRepository;
 
     ContactDtoToContactConverter contactDtoToContactConverter;
 
     @Autowired
-    public ContactListServiceImpl(CallListRepository repository){
-        this.repository = repository;
+    public ContactListServiceImpl(ContactRepository contactRepository, PhoneRepository phoneRepository){
+        this.contactRepository = contactRepository;
+        this.phoneRepository = phoneRepository;
     }
 
     public ContactListServiceImpl() { }
 
     public List<Contact> getAllContacts(){
         log.info("ContactListServiceImpl | getAllContacts | START");
-        List<ContactDTO> contactDTOS= repository.findAll();
+        List<ContactDTO> contactDTOS= contactRepository.findAll();
         List<Contact> contacts = new ArrayList<>();
         contactDtoToContactConverter = new ContactDtoToContactConverter();
         for(ContactDTO c : contactDTOS){
@@ -47,25 +52,25 @@ public class ContactListServiceImpl implements ContactListService {
         log.info("ContactListServiceImpl | createContact | START");
         ContactToContactDtoConverter converter = new ContactToContactDtoConverter();
         ContactDTO dto = converter.contactToContactDtoConverter(contact);
-        repository.save(dto);
+        ContactDTO contactDTO = contactRepository.save(dto);
         log.info("ContactListServiceImpl | createContact | END");
     }
 
     public void updateContact(long id, Contact contact){
         log.info("ContactListServiceImpl | updateContact | START");
-        log.info("ContactListServiceImpl | updateContact | updating contact " + contact.getName().getLast() + " Id " + contact.getId());
-        ContactDTO conDto = repository.getById(id);
+        log.info("ContactListServiceImpl | updateContact | updating contact " + contact.getName().getLast());
+        ContactDTO conDto = contactRepository.getById(id);
         conDto = update(conDto, contact);
-        repository.save(conDto);
+        contactRepository.save(conDto);
         log.info("ContactListServiceImpl | updateContact | END");
     }
 
-    public AtomicReference<Contact> getContact(long id) throws NoSuchFieldException {
+    public AtomicReference<Contact> getContact(long id) {
         log.info("ContactListServiceImpl | getContact | START");
         log.info("ContactListServiceImpl | getContact | re  trieving contact id: " + id);
         log.info("ContactListServiceImpl | getContact | END");
         contactDtoToContactConverter = new ContactDtoToContactConverter();
-        Optional<ContactDTO> c = repository.findById(id);
+        Optional<ContactDTO> c = contactRepository.findById(id);
         AtomicReference<Contact> contact = new AtomicReference<>(new Contact());
         c.ifPresentOrElse(
                 (value) -> {
@@ -86,12 +91,12 @@ public class ContactListServiceImpl implements ContactListService {
         log.info("ContactListServiceImpl | deleteContact | START");
         log.info("ContactListServiceImpl | deleteContact | deleting contact id: " + id);
         log.info("ContactListServiceImpl | deleteContact | END");
-        repository.deleteById(id);
+        contactRepository.deleteById(id);
     }
 
     public List<Contact> getCallList(){
         log.info("ContactListServiceImpl | getCallList | START");
-        List<ContactDTO> contactDTOS = repository.getCallList();
+        List<ContactDTO> contactDTOS = phoneRepository.getCallList();
         List<Contact> contacts = new ArrayList<>();
         contactDtoToContactConverter = new ContactDtoToContactConverter();
         for(ContactDTO c : contactDTOS){
@@ -102,7 +107,6 @@ public class ContactListServiceImpl implements ContactListService {
         return contacts;
     }
 
-    // TODO add phone
     private ContactDTO update(ContactDTO oldCon, Contact newCon) {
         oldCon.setEmail(newCon.getEmail() == null ? null : newCon.getEmail());
 
@@ -115,6 +119,17 @@ public class ContactListServiceImpl implements ContactListService {
         oldCon.setCity(newCon.getAddress().getCity() == null ? null : newCon.getAddress().getCity());
         oldCon.setZip(newCon.getAddress().getZip() == null ? null : newCon.getAddress().getZip());
 
+        List<PhoneDTO> pdtos = new ArrayList<>();
+        List<Phone> phones = newCon.getPhone();
+
+        for(Phone p : phones){
+            PhoneDTO pdto = new PhoneDTO();
+            pdto.setPhoneNumber(p.getNumber() == null ? null : p.getNumber());
+            pdto.setPhoneType(p.getType() == null ? null : p.getType());
+            pdtos.add(pdto);
+            oldCon.addToPhoneDto(pdto);
+        }
+        oldCon.setPhone(pdtos);
 
         return oldCon;
     }
