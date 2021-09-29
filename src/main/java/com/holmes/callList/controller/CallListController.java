@@ -1,6 +1,8 @@
 package com.holmes.callList.controller;
 
+import com.holmes.callList.model.CallList;
 import com.holmes.callList.model.Contact;
+import com.holmes.callList.model.Phone;
 import com.holmes.callList.service.ContactListService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @ComponentScan
 @RestController
@@ -26,20 +28,21 @@ public class CallListController {
     }
 
     @PostMapping("/contacts")
-    public ResponseEntity createContact(@RequestBody Contact contact) {
-        contactListService.createContact(contact);
-        return ResponseEntity.ok(HttpStatus.OK);
+    public long createContact(@RequestBody Contact contact) {
+        long id = contactListService.createContact(contact);
+        return id;
     }
 
     @PutMapping("/contacts/{id}")
-    public ResponseEntity updateContact(@RequestBody Contact contact) {
-        contactListService.updateContact(contact);
+    public ResponseEntity updateContact(@PathVariable long id, @RequestBody Contact contact) {
+        log.info("contactId in controller " + id);
+        contactListService.updateContact(id,contact);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/contacts/{id}")
-    public Optional<Contact> getContact(@PathVariable long id) {
-        Optional<Contact> con = contactListService.getContact(id);
+    public AtomicReference<Contact> getContact(@PathVariable long id) throws NoSuchFieldException {
+        AtomicReference<Contact> con = contactListService.getContact(id);
         return con;
     }
 
@@ -50,7 +53,7 @@ public class CallListController {
     }
 
     @GetMapping("/contacts/call-list")
-    public List<Contact> getCallList(){
+    public List<CallList> getCallList(){
         return contactListService.getCallList();
     }
 

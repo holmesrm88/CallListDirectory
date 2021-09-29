@@ -5,39 +5,25 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "contact")
-@Data
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+//@Entity
+//@Table(name = "contact")
+//@Data
+//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Contact {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    //private long id;
 
-    @Column(name = "address", nullable = false)
-    private String address;
+    private Name name;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    private Address address;
 
-    @Column(name = "email", nullable = false)
+    private List<Phone> phone;
+
     private String email;
 
-    public Contact(long id, String name, String address, String phone, String email) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-    }
-
-    public Contact(){};
 }
