@@ -28,9 +28,9 @@ public class CallListController {
     }
 
     @PostMapping("/contacts")
-    public ResponseEntity createContact(@RequestBody Contact contact) {
-        contactListService.createContact(contact);
-        return ResponseEntity.ok(HttpStatus.OK);
+    public long createContact(@RequestBody Contact contact) {
+        long id = contactListService.createContact(contact);
+        return id;
     }
 
     @PutMapping("/contacts/{id}")

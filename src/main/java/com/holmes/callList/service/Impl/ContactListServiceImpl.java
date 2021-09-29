@@ -51,12 +51,13 @@ public class ContactListServiceImpl implements ContactListService {
         return contacts;
     }
 
-    public void createContact(Contact contact){
+    public long createContact(Contact contact){
         log.info("ContactListServiceImpl | createContact | START");
         ContactToContactDtoConverter converter = new ContactToContactDtoConverter();
         ContactDTO dto = converter.contactToContactDtoConverter(contact);
         ContactDTO contactDTO = contactRepository.save(dto);
         log.info("ContactListServiceImpl | createContact | END");
+        return contactDTO.getContact_id();
     }
 
     public void updateContact(long id, Contact contact){

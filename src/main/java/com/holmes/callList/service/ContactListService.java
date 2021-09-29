@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public interface ContactListService {
     List<Contact> getAllContacts();
-    void createContact(Contact contact);
+    long createContact(Contact contact);
     void updateContact(long id, Contact contact);
     AtomicReference<Contact> getContact(long id) throws NoSuchFieldException;
     void deleteContact(long id);
