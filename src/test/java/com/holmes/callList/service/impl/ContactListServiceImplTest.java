@@ -47,7 +47,7 @@ public class ContactListServiceImplTest {
     @Mock
     ContactRepository contactRepository;
 
-    @Autowired
+    @Mock
     PhoneRepository phoneRepository;
 
     @Mock
@@ -65,6 +65,7 @@ public class ContactListServiceImplTest {
         phoneDTO.setPhoneType("home");
         phoneDTO.setPhoneNumber("888-555-1212");
         phoneDTO.setPhone_id(1L);
+        phoneDTO.setContact_id(new ContactDTO());
         phoneDTOS.add(phoneDTO);
 
         phones = new ArrayList<>();
@@ -154,9 +155,8 @@ public class ContactListServiceImplTest {
     @Test
     public void testGetCallList(){
         when(phoneRepository.getCallList()).thenReturn(phoneDTOS);
-        when(phoneDtoToCallListConverter.converter(phoneDTO)).thenReturn(callList);
         List<CallList> results = contactListService.getCallList();
-        Assert.assertEquals(callList.getName().getLast(), results.get(0).getName().getLast());
+        Assert.assertEquals(callList.getPhoneNumber(), results.get(0).getPhoneNumber());
     }
 
 }
