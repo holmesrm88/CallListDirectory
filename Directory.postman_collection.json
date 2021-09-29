@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "c2309ac7-4690-4037-9deb-ab7eb8b8b777",
+		"name": "Directory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/contacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postOne",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n    {\n        \"name\": {\n            \"first\": \"Jane\",\n            \"middle\": \"M\",\n            \"last\": \"Austin\"\n        },\n        \"address\": {\n            \"street\": \"Backwoods Rd\",\n            \"city\": \"St Louis\",\n            \"state\": \"MS\",\n            \"zip\": \"90210\"\n        },\n        \"phone\": [\n            {\n                \"number\": \"888-000-1212\",\n                \"type\": \"mobile\"\n            },\n            {\n                \"number\": \"888-333-5555\",\n                \"type\": \"home\"\n            }\n        ],\n        \"email\": \"JA@Woods.com\"\n    }\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/contacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "putOne",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"name\": {\n            \"first\": \"Robert\",\n            \"middle\": \"M\",\n            \"last\": \"Holmes\"\n        },\n        \"address\": {\n            \"street\": \"City Life Update\",\n            \"city\": \"Richmond\",\n            \"state\": \"VA\",\n            \"zip\": \"23227\"\n        },\n        \"phone\": [\n            {\n            \"number\":  \"777-777-1212\",\n            \"type\": \"home\"\n            }\n        ],\n        \"email\": \"newEmail@email.com\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/contacts/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOne",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/contacts/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteOne",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/contacts/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCallList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/contacts/call-list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts",
+						"call-list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
